@@ -38,9 +38,6 @@ if(reaction.message.channel.parentId !== process.env.CHANNEL_ID) return;
   if (reaction.emoji.name !== "❤️") return;
 
   const guild = reaction.message.guild;
-  const mod = await guild.members.fetch(user.id);
-
-  if (!mod.permissions.has(PermissionsBitField.Flags.ManageMessages)) return;
 
   const target = await guild.members.fetch(reaction.message.author.id);
 
