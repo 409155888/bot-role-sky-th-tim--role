@@ -20,8 +20,7 @@ client.on("messageReactionAdd",async(reaction,user)=>{
  console.log(`${target.user.tag} received role`);
 });
 client.login(process.env.TOKEN);
-onst express = require("express");
-const app = express();
+const express = require("express");const app = express();
 
 app.get("/", (req, res) => {
   res.send("Bot is running!");
