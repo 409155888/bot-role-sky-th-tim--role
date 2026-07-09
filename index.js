@@ -29,4 +29,4 @@ app.get("/", (req, res) => {
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server is running");
 });
-client.login("TOKEN");
+client.login("MTUyNDY2NjQ2MTg2NjU2MTY3Ng.G4RT1m.3-QP_C0gAn-VdBH4ALQ6Rp5F59ZpN179XRefUg");
