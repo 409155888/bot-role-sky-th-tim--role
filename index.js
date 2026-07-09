@@ -47,8 +47,7 @@ if (reaction.message.channel.id !== process.env.CHANNEL_ID) return;
   if (target.user.bot) return;
   if (target.roles.cache.has(process.env.ROLE_ID)) return;
 
-  await target.roles.add(process.env.1524688692994773042);
-
+await target.roles.add(process.env.ROLE_ID);
   console.log(`${target.user.tag} received role`);
 });
 
