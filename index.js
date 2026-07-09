@@ -3,8 +3,7 @@ require("dotenv").config();
 const {
   Client,
   GatewayIntentBits,
-  Partials,
-  PermissionsBitField
+  Partials
 } = require("discord.js");
 
 const express = require("express");
@@ -12,7 +11,6 @@ const express = require("express");
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMessageReactions
   ],
@@ -28,24 +26,27 @@ client.once("ready", () => {
 });
 
 client.on("messageReactionAdd", async (reaction, user) => {
-  if (user.bot) return;
+  try {
+    if (user.bot) return;
 
-  if (reaction.partial) {
-    await reaction.fetch();
+    if (reaction.partial) {
+      await reaction.fetch();
+    }
+
+    // Dùng cho Forum Channel
+    if (reaction.message.channel.parentId !== process.env.CHANNEL_ID) return;
+
+    if (reaction.emoji.name !== "❤️") return;
+
+    const member = await reaction.message.guild.members.fetch(user.id);
+
+    await member.roles.add(process.env.ROLE_ID);
+
+    console.log(`${member.user.tag} received role`);
+
+  } catch (err) {
+    console.log("REACTION ERROR:", err);
   }
-
-if(reaction.message.channel.parentId !== process.env.CHANNEL_ID) return;
-  if (reaction.emoji.name !== "❤️") return;
-
-  const guild = reaction.message.guild;
-
-  const target = await guild.members.fetch(reaction.message.author.id);
-
-  if (target.user.bot) return;
-  if (target.roles.cache.has(process.env.ROLE_ID)) return;
-
-await target.roles.add(process.env.ROLE_ID);
-  console.log(`${target.user.tag} received role`);
 });
 
 const app = express();
@@ -57,7 +58,10 @@ app.get("/", (req, res) => {
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server is running");
 });
+
 console.log("TOKEN:", process.env.TOKEN ? "Có token" : "Không có token");
-client.login(process.env.TOKEN).catch(err => {
-  console.log("LOGIN ERROR:", err);
-});
+
+client.login(process.env.TOKEN)
+  .catch(err => {
+    console.log("LOGIN ERROR:", err);
+  });
