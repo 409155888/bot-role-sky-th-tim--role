@@ -34,7 +34,7 @@ client.on("messageReactionAdd", async (reaction, user) => {
     await reaction.fetch();
   }
 
-  if (reaction.message.channel.id !== process.env.1524686200198266910) return;
+if (reaction.message.channel.id !== process.env.CHANNEL_ID) return;
   if (reaction.emoji.name !== "❤️") return;
 
   const guild = reaction.message.guild;
