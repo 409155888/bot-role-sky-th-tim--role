@@ -58,4 +58,6 @@ app.listen(process.env.PORT || 3000, () => {
   console.log("Server is running");
 });
 console.log("TOKEN:", process.env.TOKEN ? "Có token" : "Không có token");
-client.login(process.env.TOKEN);;
+client.login(process.env.TOKEN).catch(err => {
+  console.log("LOGIN ERROR:", err);
+});
